@@ -30,6 +30,8 @@ class AvrohuggerGenerator {
     val generator = new Generator(SpecificRecord)
 
     val allFiles = inputDirectory.listFiles()
+    println(inputDirectory.toPath.toAbsolutePath.toString)
+    println(allFiles)
 
     val avdlFiles = allFiles.withSuffix(".avdl")
     val avscFiles = AVSCFileSorter.sortSchemaFiles(allFiles.withSuffix(".avsc"))

@@ -19,6 +19,8 @@ package at.makubi.maven.plugin.avrohugger;
 import org.apache.commons.io.FileUtils;
 import org.apache.maven.plugin.logging.SystemStreamLog;
 import org.apache.maven.plugin.testing.AbstractMojoTestCase;
+import org.apache.maven.plugin.testing.resources.TestResources;
+import org.apache.maven.project.MavenProject;
 import org.junit.After;
 import org.junit.Before;
 
@@ -40,7 +42,7 @@ public class AvrohuggerGeneratorTest extends AbstractMojoTestCase {
     }
 
     public void testAvrohuggerGenerator() throws IOException {
-        Path inputDirectory = Paths.get(getBasedir()).resolve("src/test/resources/unit/avrohugger-maven-plugin");
+        Path inputDirectory = Paths.get(getBasedir()).resolve("../src/test/resources/unit/avrohugger-maven-plugin");
         Path schemaDirectory = inputDirectory.resolve("schema");
 
         File expectedRecord = inputDirectory.resolve("expected/Record.scala").toFile();
