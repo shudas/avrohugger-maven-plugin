@@ -16,6 +16,8 @@
 
 package at.makubi.maven.plugin.avrohugger;
 
+import at.makubi.maven.plugin.avrohugger.api.AvrohuggerGenerator;
+import at.makubi.maven.plugin.avrohugger.api.AvrohuggerGeneratorFactory;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -46,7 +48,7 @@ public class GeneratorMojo extends AbstractMojo {
         String outputDirectoryPath = outputDirectory.getAbsolutePath();
         getLog().info("Generating Scala files for schemas in " + sourceDirectoryPath + " to " + outputDirectoryPath);
 
-        AvrohuggerGenerator generator = new AvrohuggerGenerator();
+        AvrohuggerGenerator generator = AvrohuggerGeneratorFactory.getAvrohuggerGenerator();
         generator.generateScalaFiles(sourceDirectory, outputDirectoryPath, getLog(), recursive);
     }
 }

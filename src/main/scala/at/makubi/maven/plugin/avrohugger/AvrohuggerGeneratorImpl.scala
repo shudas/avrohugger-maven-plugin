@@ -19,6 +19,7 @@ package at.makubi.maven.plugin.avrohugger
 import java.io.File
 
 import at.makubi.maven.plugin.avrohugger.Implicits._
+import at.makubi.maven.plugin.avrohugger.api.AvrohuggerGenerator
 import avrohugger.Generator
 import avrohugger.format.SpecificRecord
 import com.julianpeeters.avrohugger.filesorter.{AVDLFileSorter, AVSCFileSorter}
@@ -26,8 +27,8 @@ import org.apache.maven.plugin.logging.Log
 
 import scala.collection.mutable.ListBuffer
 
-class AvrohuggerGenerator {
-  def generateScalaFiles(inputDirectory: File, outputDirectory: String, log: Log, recursive: Boolean): Unit = {
+class AvrohuggerGeneratorImpl extends AvrohuggerGenerator {
+  override def generateScalaFiles(inputDirectory: File, outputDirectory: String, log: Log, recursive: Boolean): Unit = {
     val generator = new Generator(SpecificRecord)
 
     listFiles(inputDirectory, recursive).foreach { schemaFile =>
