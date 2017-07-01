@@ -12,16 +12,12 @@
             <useProjectArtifact>false</useProjectArtifact>
             <unpack>true</unpack>
             <scope>runtime</scope>
-            <excludes>
-                <exclude>org.apache.maven*:</exclude>
-            </excludes>
         </dependencySet>
         <dependencySet>
             <outputDirectory>/</outputDirectory>
             <useProjectArtifact>true</useProjectArtifact>
             <includes>
                 <include>at.makubi.maven.plugin:avrohugger-maven-plugin_2.11</include>
-                <include>org.apache.maven*:</include>
             </includes>
             <unpack>true</unpack>
             <scope>runtime</scope>

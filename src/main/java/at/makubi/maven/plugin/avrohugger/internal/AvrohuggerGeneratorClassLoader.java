@@ -3,6 +3,8 @@ package at.makubi.maven.plugin.avrohugger.internal;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
+import java.util.List;
 
 public class AvrohuggerGeneratorClassLoader extends ClassLoader {
 
@@ -12,6 +14,8 @@ public class AvrohuggerGeneratorClassLoader extends ClassLoader {
 
     private static final String apiPackageName = "at.makubi.maven.plugin.avrohugger";
     private static final String thirdPartyLibsFolderName = "at.makubi.maven.plugin.avrohugger.thirdpartylibs";
+
+    private final List<String> packagedPackageNames = Arrays.asList("scala");
 
     private final ClassLoader resourceClassLoader;
 
@@ -26,19 +30,25 @@ public class AvrohuggerGeneratorClassLoader extends ClassLoader {
     protected Class<?> findClass(String name) throws ClassNotFoundException {
 
         final String hiddenClassResourceName = getClassResourceName(name);
+        System.out.println("[LoggingCLassLoader] name is " + name);
 
         try {
-            System.out.println("[LoggingClassLoader] trying to load " + hiddenClassResourceName + " as resource");
-            return getClass(name, hiddenClassResourceName);
+
+            if(hiddenClassResourceName.startsWith(thirdPartyLibsFolderName)) {
+                System.out.println("[LoggingClassLoader] trying to load " + hiddenClassResourceName + " as resource");
+                return getClass(name, hiddenClassResourceName);
+            } else {
+                return resourceClassLoader.loadClass(name);
+            }
         } catch(IOException e){
             throw new ClassNotFoundException("Loading class " + name + "(" + hiddenClassResourceName + ") was not successful", e);
         }
     }
 
     private String getClassResourceName(String className) {
-        String prefixFolder = className.startsWith(apiPackageName) || className.startsWith("org.apache.maven")
-                ? ""
-                : thirdPartyLibsFolderName + "/";
+        String prefixFolder = className.startsWith("scala" + ".")
+                ? thirdPartyLibsFolderName + "/"
+                : "";
 
         return prefixFolder + className.replace(".", "/") + ".class";
     }
